@@ -24,8 +24,8 @@ The plugin will expose the following objects pending successful connection:
 * `MongoDB`: The MongoDB library
 
 ## Sample Server
-[Gist Version](https://gist.github.com/BrandonCKrueger/1c4db489aec56cb3cea2)
-```
+[Gist](https://gist.github.com/BrandonCKrueger/1c4db489aec56cb3cea2)
+```javascript
 /// <reference path='../typings/tsd.d.ts' />
 import Hapi = require('hapi');
 import Boom = require('boom');
