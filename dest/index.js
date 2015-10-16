@@ -9,9 +9,11 @@ exports.register = function (server, pluginOptions, next) {
             return next(error);
         }
         if (!pluginOptions.url) {
-            pluginOptions.url = 'mongodb://' +
-                pluginOptions.username + ':' + pluginOptions.password + '@' +
-                pluginOptions.host + ':' + pluginOptions.port + '/' + pluginOptions.database;
+            pluginOptions.url = 'mongodb://';
+            if (pluginOptions.username && pluginOptions.password) {
+                pluginOptions.url += pluginOptions.username + ':' + pluginOptions.password + '@';
+            }
+            pluginOptions.url += pluginOptions.host + ':' + pluginOptions.port + '/' + pluginOptions.database;
         }
         MongoClient.connect(pluginOptions.url, pluginOptions.settings, function (error, db) {
             if (error) {

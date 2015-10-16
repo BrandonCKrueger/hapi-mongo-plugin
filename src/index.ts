@@ -16,9 +16,11 @@ exports.register = function(server: Hapi.Server, pluginOptions: PluginOption.Plu
 		}
 
 		if (!pluginOptions.url) {
-			pluginOptions.url = 'mongodb://' +
-			pluginOptions.username + ':' + pluginOptions.password + '@' +
-			pluginOptions.host + ':' + pluginOptions.port + '/' + pluginOptions.database;
+			pluginOptions.url = 'mongodb://';
+			if (pluginOptions.username && pluginOptions.password) {
+				pluginOptions.url += pluginOptions.username + ':' + pluginOptions.password + '@';
+			}
+			pluginOptions.url += pluginOptions.host + ':' + pluginOptions.port + '/' + pluginOptions.database;
 		}
 
 		MongoClient.connect(pluginOptions.url, pluginOptions.settings, function(error: any, db: MongoDB.Db): void {
