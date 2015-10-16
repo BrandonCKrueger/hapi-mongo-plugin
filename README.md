@@ -24,4 +24,66 @@ The plugin will expose the following objects pending successful connection:
 * `MongoDB`: The MongoDB library
 
 ## Sample Server
-<script src="https://gist.github.com/BrandonCKrueger/1c4db489aec56cb3cea2.js"></script>
+[Gist Version](https://gist.github.com/BrandonCKrueger/1c4db489aec56cb3cea2)
+```
+/// <reference path='../typings/tsd.d.ts' />
+import Hapi = require('hapi');
+import Boom = require('boom');
+
+// creating the hapi server instance
+let server: Hapi.Server = new Hapi.Server();
+
+// adding a new connection that can be listened on
+server.connection({
+    port: process.env.PORT || 3000,
+    host: 'localhost',
+    labels: ['web']
+});
+
+// register routes
+registerRoutes(server);
+
+// register hapi-mongo-plugin
+let database: any = {
+	host: 'localhost',
+	port: '27017'
+};
+server.register({ register: require('hapi-mongo-plugin'), options: database }, function(error: any): void {
+    if (error) {
+        console.log(error);
+    } else {
+      startServer(server);
+    }
+});
+
+
+// private functions
+function startServer(server: Hapi.Server): void {
+  server.start(function (error: any): void {
+    if (error) {
+      throw error;
+    }
+    console.log('Server running at:', server.info.uri);
+  });
+}
+
+function registerRoutes(server: Hapi.Server): void {
+    server.route({
+        'method'  : 'GET',
+        'path'    : '/users/{id}',
+        'handler' : usersHandler
+    });
+
+    function usersHandler(request: Hapi.Request, reply: Hapi.IReply): void {
+        let db: any = request.server.plugins['hapi-mongo-plugin'].Database;
+        let ObjectId: any = request.server.plugins['hapi-mongo-plugin'].MongoDB.ObjectID;
+
+        db.collection('users').findOne({  '_id' : new ObjectId(request.params.id) }, function(err: any, result: any): any {
+            if (err) {
+                return reply(Boom.internal('Internal MongoDB error', err));
+            }
+            reply(result);
+        });
+    }
+}
+```
