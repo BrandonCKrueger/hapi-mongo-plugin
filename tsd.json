@@ -1,0 +1,21 @@
+{
+  "version": "v4",
+  "repo": "borisyankov/DefinitelyTyped",
+  "ref": "master",
+  "path": "typings",
+  "bundle": "typings/tsd.d.ts",
+  "installed": {
+    "joi/joi.d.ts": {
+      "commit": "eab2e0487e9685952db58e487d484a1c342ec670"
+    },
+    "mongodb/mongodb.d.ts": {
+      "commit": "eab2e0487e9685952db58e487d484a1c342ec670"
+    },
+    "node/node.d.ts": {
+      "commit": "eab2e0487e9685952db58e487d484a1c342ec670"
+    },
+    "hapi/hapi.d.ts": {
+      "commit": "eab2e0487e9685952db58e487d484a1c342ec670"
+    }
+  }
+}
