@@ -88,4 +88,4 @@ function registerRoutes(server: Hapi.Server): void {
 }
 ```
 
-Edit 2
+Edit 3
